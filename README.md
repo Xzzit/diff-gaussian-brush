@@ -4,7 +4,7 @@ Used as the rasterization engine for the paper "3D Gaussian Splatting for Real-T
 
 # What's changed?
 
-1. p_view.z has been replaced by p_proj.z for [frustum culling](cuda_rasterizer\auxiliary.h#L151) and [depth estimation](cuda_rasterizer\forward.cu#L249).
+1. `p_view.z` has been replaced by `p_proj.z` for [frustum culling](./cuda_rasterizer/auxiliary.h#L151) and [depth estimation](./cuda_rasterizer/forward.cu#L249).
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
