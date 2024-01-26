@@ -189,8 +189,7 @@ __global__ void preprocessCUDA(int P, int D, int M,
 	tiles_touched[idx] = 0;
 
 	// Perform near culling, quit if outside.
-	float3 p_view;
-	if (!in_frustum(idx, orig_points, viewmatrix, projmatrix, prefiltered, p_view))
+	if (!in_frustum(idx, orig_points, projmatrix, prefiltered))
 		return;
 
 	// Transform point by projecting
@@ -247,7 +246,7 @@ __global__ void preprocessCUDA(int P, int D, int M,
 	}
 
 	// Store some useful helper data for the next steps.
-	depths[idx] = p_view.z;
+	depths[idx] = p_proj.z;
 	radii[idx] = my_radius;
 	points_xy_image[idx] = point_image;
 	// Inverse 2D covariance and opacity neatly pack into one float4
