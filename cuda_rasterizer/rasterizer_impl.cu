@@ -66,6 +66,7 @@ __global__ void checkFrustum(int P,
 
 // Generates one key/value pair for all Gaussian / tile overlaps. 
 // Run once per Gaussian (1:N mapping).
+// offsets: cumulated number of Gaussian
 __global__ void duplicateWithKeys(
 	int P,
 	const float2* points_xy,

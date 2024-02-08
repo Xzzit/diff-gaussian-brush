@@ -43,6 +43,7 @@ __forceinline__ __device__ float ndc2Pix(float v, int S)
 	return ((v + 1.0) * S - 1.0) * 0.5;
 }
 
+// Compute how many tiles each gaussian kernel covers
 __forceinline__ __device__ void getRect(const float2 p, int max_radius, uint2& rect_min, uint2& rect_max, dim3 grid)
 {
 	rect_min = {
