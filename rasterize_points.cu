@@ -249,7 +249,7 @@ RasterizeGaussiansBrushStrokeCUDA(
 		M = sh.size(1);
       }
 
-	  rendered = CudaRasterizer::Rasterizer::forward(
+	  rendered = CudaRasterizer::Rasterizer::forward_brush_stroke(
 	    geomFunc,
 		binningFunc,
 		imgFunc,
