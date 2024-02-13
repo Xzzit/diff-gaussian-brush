@@ -88,6 +88,10 @@ class _RasterizeGaussians(torch.autograd.Function):
                 torch.save(cpu_args, "snapshot_fw.dump")
                 print("\nAn error occured in forward. Please forward snapshot_fw.dump for debugging.")
                 raise ex
+
+        elif raster_settings.brush_stroke:
+            num_rendered, color, radii, geomBuffer, binningBuffer, imgBuffer = _C.rasterize_gaussians_brush_stroke(*args)
+        
         else:
             num_rendered, color, radii, geomBuffer, binningBuffer, imgBuffer = _C.rasterize_gaussians(*args)
 
@@ -167,6 +171,7 @@ class GaussianRasterizationSettings(NamedTuple):
     campos : torch.Tensor
     prefiltered : bool
     debug : bool
+    brush_stroke : bool
 
 class GaussianRasterizer(nn.Module):
     def __init__(self, raster_settings):
