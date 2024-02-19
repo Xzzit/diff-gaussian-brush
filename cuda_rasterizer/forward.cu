@@ -192,6 +192,10 @@ __global__ void preprocessCUDA(int P, int D, int M,
 	if (!in_frustum(idx, orig_points, projmatrix, prefiltered))
 		return;
 
+	// Delete small Gaussians
+	if (scales[idx].x < 0.01f || scales[idx].y < 0.01f || scales[idx].z < 0.01f)
+		return;
+
 	// Transform point by projecting
 	float3 p_orig = { orig_points[3 * idx], orig_points[3 * idx + 1], orig_points[3 * idx + 2] };
 	float4 p_hom = transformPoint4x4(p_orig, projmatrix);
@@ -455,7 +459,7 @@ renderbrushCUDA(
 			// and its exponential falloff from mean.
 			// Avoid numerical instabilities (see paper appendix). 
 			float alpha = min(0.99f, con_o.w * exp(power));
-			if (alpha < 1.0f / 255.0f)
+			if (alpha < 100.0f / 255.0f)
 				continue;
 			float test_T = T * (1 - alpha);
 			if (test_T < 0.0001f)

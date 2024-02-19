@@ -366,6 +366,10 @@ __global__ void preprocessCUDA(
 	auto idx = cg::this_grid().thread_rank();
 	if (idx >= P || !(radii[idx] > 0))
 		return;
+	
+	// Delete small Gaussians
+	if (scales[idx].x < 0.01f || scales[idx].y < 0.01f || scales[idx].z < 0.01f)
+		return;
 
 	float3 m = means[idx];
 
