@@ -368,8 +368,8 @@ __global__ void preprocessCUDA(
 		return;
 	
 	// Delete small Gaussians
-	if (scales[idx].x < 0.01f || scales[idx].y < 0.01f || scales[idx].z < 0.01f)
-		return;
+	// if (scales[idx].x < 0.01f || scales[idx].y < 0.01f || scales[idx].z < 0.01f)
+	// 	return;
 
 	float3 m = means[idx];
 
