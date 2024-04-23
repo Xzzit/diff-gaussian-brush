@@ -90,7 +90,7 @@ class _RasterizeGaussians(torch.autograd.Function):
                 raise ex
 
         elif raster_settings.brush_stroke:
-            num_rendered, color, radii, geomBuffer, binningBuffer, imgBuffer = _C.rasterize_gaussians_brush_stroke(*args)
+            num_rendered, color, radii, geomBuffer, binningBuffer, imgBuffer = _C.brush_stroke(*args)
         
         else:
             num_rendered, color, radii, geomBuffer, binningBuffer, imgBuffer = _C.rasterize_gaussians(*args)

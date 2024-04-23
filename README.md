@@ -5,7 +5,7 @@ Used as the rasterization engine for the paper "3D Gaussian Splatting for Real-T
 # What's changed?
 1. `p_view.z` has been replaced by `p_proj.z` for [frustum culling](./cuda_rasterizer/auxiliary.h#L151) and [depth estimation](./cuda_rasterizer/forward.cu#L249).
 2. add `brush_stroke` to `raster_settings`, which is used to activate the brush stroke mode.
-3. add `RasterizeGaussiansBrushStrokeCUDA` for brush stroke mode.
+3. add `BrushStrokeCUDA` for brush stroke mode (forward propagation).
 
 
 <section class="section" id="BibTeX">
