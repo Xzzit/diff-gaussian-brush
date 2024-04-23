@@ -385,7 +385,7 @@ int CudaRasterizer::Rasterizer::forward_brush_stroke(
 	}
 
 	// Run preprocessing per-Gaussian (transformation, bounding, conversion of SHs to RGB)
-	CHECK_CUDA(FORWARD::preprocess(
+	CHECK_CUDA(FORWARD::preprocess_brush_stroke(
 		P, D, M,
 		means3D,
 		(glm::vec3*)scales,
