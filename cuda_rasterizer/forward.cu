@@ -1,18 +1,8 @@
-/*
- * Copyright (C) 2023, Inria
- * GRAPHDECO research group, https://team.inria.fr/graphdeco
- * All rights reserved.
- *
- * This software is free for non-commercial, research and evaluation use 
- * under the terms of the LICENSE.md file.
- *
- * For inquiries contact  george.drettakis@inria.fr
- */
-
 #include "forward.h"
 #include "auxiliary.h"
 #include <cooperative_groups.h>
 #include <cooperative_groups/reduce.h>
+#include <curand_kernel.h>
 namespace cg = cooperative_groups;
 
 // Forward method for converting the input spherical harmonics
@@ -551,9 +541,20 @@ renderbrushCUDA(
 			// Resample using conic matrix (cf. "Surface 
 			// Splatting" by Zwicker et al., 2001)
 			float2 xy = collected_xy[j];
+
 			float2 d = { xy.x - pixf.x, xy.y - pixf.y };
+			// Initialize the random number generator
+			int idx = threadIdx.x + blockIdx.x * blockDim.x;
+    		curandState state;
+    		curand_init(clock64(), idx, 0, &state);
+			float random_number = curand_uniform(&state);
+			float2 d_ = { xy.x - pixf.x - 10 * random_number, xy.y - pixf.y - 10 * random_number};
+
 			float4 con_o = collected_conic_opacity[j];
 			float power = -0.5f * (con_o.x * d.x * d.x + con_o.z * d.y * d.y) - con_o.y * d.x * d.y;
+			float power_ = -0.5f * (con_o.x * d_.x * d_.x + con_o.z * d_.y * d_.y) - con_o.y * d_.x * d_.y;
+			if (power < power_)
+				power = power_;
 			if (power > 0.0f)
 				continue;
 
